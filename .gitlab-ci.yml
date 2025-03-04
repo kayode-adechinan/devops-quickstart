@@ -18,13 +18,13 @@ sonarqube:
   stage: sonarqube
   image: maven:3.8.4-openjdk-17
   script:
-    - mvn sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=quickstart
-    #- mvn sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=quickstart -Dsonar.qualitygate.wait=true # wait for the code to send the score and fail if the score has not been met
+    - mvn sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=devops-quickstart
+    #- mvn sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=devops-quickstart -Dsonar.qualitygate.wait=true # wait for the code to send the score and fail if the score has not been met
 
   only:
     - main
   variables:
-    SONAR_TOKEN: sqa_d65d7ff106282b1476c68ca0d5a82a6aa138560f
+    SONAR_TOKEN: sqa_ab391935726494fd7885e47a6f664ad46c729880
 
 build:
   stage: build
