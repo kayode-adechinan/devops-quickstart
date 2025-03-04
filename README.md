@@ -36,7 +36,7 @@ docker compose up --build -d
 docker exec -it gitlab-runner gitlab-runner register \
   --non-interactive \
   --url "http://192.168.1.154" \
-  --registration-token "B7XVqgYoc4oaq3uTk3QJ" \
+  --registration-token "AEity5B4axBN9vcU8y-n" \
   --executor "docker" \
   --docker-image "maven:3.8.4-openjdk-17" \
   --description "local-docker-runner" \
