@@ -1,0 +1,54 @@
+stages:
+  - test
+  - sonarqube
+  - build
+  - deploy
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  SONAR_HOST_URL: "http://192.168.1.154:9000" # Use the service name for Docker Compose
+
+test:
+  stage: test
+  image: maven:3.8.4-openjdk-17
+  script:
+    - mvn test
+
+sonarqube:
+  stage: sonarqube
+  image: maven:3.8.4-openjdk-17
+  script:
+    - mvn sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=quickstart
+    #- mvn sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=quickstart -Dsonar.qualitygate.wait=true # wait for the code to send the score and fail if the score has not been met
+
+  only:
+    - main
+  variables:
+    SONAR_TOKEN: sqa_d65d7ff106282b1476c68ca0d5a82a6aa138560f
+
+build:
+  stage: build
+  image: maven:3.8.4-openjdk-17
+  script:
+    - mvn clean package -DskipTests
+  artifacts:
+    paths:
+      - target/*.jar
+
+deploy_gitlab:
+  stage: deploy
+  image: maven:3.8.4-openjdk-17
+  script:
+    - echo "Deploying artifact to GitLab Package Registry..."
+    - mvn deploy -DskipTests -Denv.CI_JOB_TOKEN=$CI_JOB_TOKEN -DaltDeploymentRepository="gitlab::default::http://192.168.1.154/api/v4/projects/1/packages/maven" --settings .m2/gitlab-settings.xml
+  only:
+    - main
+
+deploy_nexus:
+  stage: deploy
+  image: maven:3.8.4-openjdk-17
+  script:
+    - echo "Deploying artifact to Nexus..."
+    - mvn deploy -DskipTests -DaltDeploymentRepository="nexus::default::http://192.168.1.154:8081/repository/maven-snapshots/" --settings .m2/nexus-settings.xml
+  only:
+    - main
