@@ -24,7 +24,7 @@ sonarqube:
   only:
     - main
   variables:
-    SONAR_TOKEN: sqa_ab391935726494fd7885e47a6f664ad46c729880
+    SONAR_TOKEN: sqa_846a24d1a85b01679502aa28684c6a0a3fe4d655
 
 build:
   stage: build

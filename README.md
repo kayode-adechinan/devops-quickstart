@@ -69,7 +69,7 @@ git remote add origin git@192.168.1.154:root/quickstart.git
 - admin / @yNr!993@yNr!993
 - create a token 
   - my account > security 
-  - sqa_ab391935726494fd7885e47a6f664ad46c729880
+  - sqa_846a24d1a85b01679502aa28684c6a0a3fe4d655
 - create a project and the key
   - devops-quickstart
 
@@ -94,7 +94,7 @@ git remote add origin git@192.168.1.154:root/quickstart.git
 
 # Add the following var under ci/cd of your project
 - NEXUS_USERNAME : admin
-- NEXUS_PASSWORD : d4e57c00-3d66-493e-a531-cea767484d95
+- NEXUS_PASSWORD : @yNr!993@yNr!993
 
 
 
